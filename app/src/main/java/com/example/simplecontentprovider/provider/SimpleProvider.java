@@ -2,12 +2,36 @@ package com.example.simplecontentprovider.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.example.simplecontentprovider.database.DatabaseContract;
+
 public class SimpleProvider extends ContentProvider {
+
+    public static final String AUTHORITY = "com.example.simplecontentprovider";
+    public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
+
+    private static final UriMatcher sUriMatcher = buildUriMatcher();
+
+    private static final int MATCH_USERS = 100;
+    private static final int MATCH_COMPANIES = 200;
+
     public SimpleProvider() {
+
     }
+
+    public static UriMatcher buildUriMatcher() {
+        UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+        uriMatcher.addURI(AUTHORITY, DatabaseContract.PATH_USERS, MATCH_USERS);
+        uriMatcher.addURI(AUTHORITY, DatabaseContract.PATH_COMPANIES, MATCH_COMPANIES);
+
+        return uriMatcher;
+    }
+
+
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
