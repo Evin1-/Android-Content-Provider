@@ -3,8 +3,9 @@ package com.example.simplecontentprovider.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.example.simplecontentprovider.database.DatabaseContract.UsersEntry;
+
 import com.example.simplecontentprovider.database.DatabaseContract.CompaniesEntry;
+import com.example.simplecontentprovider.database.DatabaseContract.UsersEntry;
 
 
 /**
