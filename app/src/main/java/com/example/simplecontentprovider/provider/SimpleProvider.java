@@ -1,9 +1,11 @@
 package com.example.simplecontentprovider.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.example.simplecontentprovider.database.DatabaseContract;
@@ -56,8 +58,34 @@ public class SimpleProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
+        final SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        long resultId;
+        Uri returnUri;
+
+        switch (match) {
+            case MATCH_USERS:
+                resultId = db.insert(DatabaseContract.UsersEntry.TABLE_NAME, null, values);
+                if (resultId > 0) {
+                    returnUri = ContentUris.withAppendedId(DatabaseContract.UsersEntry.CONTENT_URI, resultId);
+                } else {
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                }
+                break;
+            case MATCH_COMPANIES:
+                resultId = db.insert(DatabaseContract.CompaniesEntry.TABLE_NAME, null, values);
+                if (resultId > 0) {
+                    returnUri = ContentUris.withAppendedId(DatabaseContract.CompaniesEntry.CONTENT_URI, resultId);
+                } else {
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                }
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return returnUri;
     }
 
     @Override

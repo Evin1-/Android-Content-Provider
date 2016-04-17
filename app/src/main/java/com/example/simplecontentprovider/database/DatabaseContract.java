@@ -1,6 +1,7 @@
 package com.example.simplecontentprovider.database;
 
 import android.content.ContentResolver;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.example.simplecontentprovider.provider.SimpleProvider;
@@ -15,8 +16,17 @@ public class DatabaseContract {
 
     public static class UsersEntry implements BaseColumns {
 
-        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + SimpleProvider.AUTHORITY + "/" + PATH_USERS;
-        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + SimpleProvider.AUTHORITY + "/" + PATH_USERS;
+        public static final Uri CONTENT_URI = SimpleProvider.BASE_URI
+                .buildUpon()
+                .appendPath(PATH_USERS)
+                .build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE +
+                "/" + SimpleProvider.AUTHORITY +
+                "/" + PATH_USERS;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE +
+                "/" + SimpleProvider.AUTHORITY +
+                "/" + PATH_USERS;
 
         public static final String TABLE_NAME = "users";
 
@@ -33,8 +43,17 @@ public class DatabaseContract {
 
     public static class CompaniesEntry implements BaseColumns {
 
-        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + SimpleProvider.AUTHORITY + "/" + PATH_COMPANIES;
-        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + SimpleProvider.AUTHORITY + "/" + PATH_COMPANIES;
+        public static final Uri CONTENT_URI = SimpleProvider.BASE_URI
+                .buildUpon()
+                .appendPath(PATH_COMPANIES)
+                .build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE +
+                "/" + SimpleProvider.AUTHORITY +
+                "/" + PATH_COMPANIES;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE +
+                "/" + SimpleProvider.AUTHORITY +
+                "/" + PATH_COMPANIES;
 
         public static final String TABLE_NAME = "companies";
 
