@@ -37,7 +37,7 @@ public class DatabaseContract {
                 "(" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 KEY_NAME + " TEXT," +
-                KEY_AGE + " TEXT" +
+                KEY_AGE + " INTEGER" +
                 ")";
     }
 
