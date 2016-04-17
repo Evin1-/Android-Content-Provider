@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SimpleContentProvider</string>
+    <string name="insert_rows">Insert rows</string>
+    <string name="log_rows">Log rows</string>
 </resources>
