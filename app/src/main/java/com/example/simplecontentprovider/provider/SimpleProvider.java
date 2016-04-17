@@ -59,20 +59,40 @@ public class SimpleProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        // TODO: Implement this to handle query requests from clients.
-        throw new UnsupportedOperationException("Not yet implemented");
+        final SQLiteDatabase sqLiteDatabase = mDatabaseHelper.getReadableDatabase();
+        final int match = sUriMatcher.match(uri);
+        String tableName;
+
+        switch (match) {
+            case MATCH_USERS:
+                tableName = DatabaseContract.UsersEntry.TABLE_NAME;
+                break;
+            case MATCH_COMPANIES:
+                tableName = DatabaseContract.CompaniesEntry.TABLE_NAME;
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+
+        return sqLiteDatabase.query(tableName,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder);
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        final SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        final SQLiteDatabase sqLiteDatabase = mDatabaseHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         long resultId;
         Uri returnUri;
 
         switch (match) {
             case MATCH_USERS:
-                resultId = db.insert(DatabaseContract.UsersEntry.TABLE_NAME, null, values);
+                resultId = sqLiteDatabase.insert(DatabaseContract.UsersEntry.TABLE_NAME, null, values);
                 if (resultId > 0) {
                     returnUri = ContentUris.withAppendedId(DatabaseContract.UsersEntry.CONTENT_URI, resultId);
                 } else {
@@ -80,7 +100,7 @@ public class SimpleProvider extends ContentProvider {
                 }
                 break;
             case MATCH_COMPANIES:
-                resultId = db.insert(DatabaseContract.CompaniesEntry.TABLE_NAME, null, values);
+                resultId = sqLiteDatabase.insert(DatabaseContract.CompaniesEntry.TABLE_NAME, null, values);
                 if (resultId > 0) {
                     returnUri = ContentUris.withAppendedId(DatabaseContract.CompaniesEntry.CONTENT_URI, resultId);
                 } else {
