@@ -1,13 +1,23 @@
 package com.example.simplecontentprovider.database;
 
+import android.content.ContentResolver;
 import android.provider.BaseColumns;
+
+import com.example.simplecontentprovider.provider.SimpleProvider;
 
 /**
  * Created by evin on 4/16/16.
  */
 public class DatabaseContract {
 
+    public static final String PATH_USERS = "users";
+    public static final String PATH_COMPANIES = "companies";
+
     public static class UsersEntry implements BaseColumns {
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + SimpleProvider.AUTHORITY + "/" + PATH_USERS;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + SimpleProvider.AUTHORITY + "/" + PATH_USERS;
+
         public static final String TABLE_NAME = "users";
 
         public static final String KEY_NAME = "name";
@@ -22,6 +32,10 @@ public class DatabaseContract {
     }
 
     public static class CompaniesEntry implements BaseColumns {
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + SimpleProvider.AUTHORITY + "/" + PATH_COMPANIES;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + SimpleProvider.AUTHORITY + "/" + PATH_COMPANIES;
+
         public static final String TABLE_NAME = "companies";
 
         public static final String KEY_NAME = "name";
