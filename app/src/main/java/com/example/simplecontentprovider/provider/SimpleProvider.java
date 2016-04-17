@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.example.simplecontentprovider.database.DatabaseContract;
+import com.example.simplecontentprovider.database.DatabaseHelper;
 
 public class SimpleProvider extends ContentProvider {
 
@@ -17,6 +18,8 @@ public class SimpleProvider extends ContentProvider {
 
     private static final int MATCH_USERS = 100;
     private static final int MATCH_COMPANIES = 200;
+
+    private DatabaseHelper mDatabaseHelper;
 
     public SimpleProvider() {
 
@@ -30,8 +33,6 @@ public class SimpleProvider extends ContentProvider {
 
         return uriMatcher;
     }
-
-
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
@@ -54,8 +55,8 @@ public class SimpleProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        // TODO: Implement this to initialize your content provider on startup.
-        return false;
+        mDatabaseHelper = new DatabaseHelper(getContext());
+        return true;
     }
 
     @Override
